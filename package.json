@@ -1,0 +1,64 @@
+{
+  "name": "nostr-comments",
+  "version": "0.1.0",
+  "description": "A Nostr-based web comment component using NIP-22 protocol",
+  "type": "module",
+  "main": "./dist/nostr-comments.cjs",
+  "module": "./dist/nostr-comments.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/nostr-comments.js",
+      "require": "./dist/nostr-comments.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [
+    "nostr",
+    "comments",
+    "nip-22",
+    "react",
+    "web-component"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@nostr/gadgets": "npm:@jsr/nostr__gadgets@^0.0.46",
+    "lucide-react": "^0.563.0",
+    "nostr-tools": "^2.10.4"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.0.0",
+    "@storybook/addon-a11y": "^10.2.0",
+    "@storybook/addon-docs": "^10.2.0",
+    "@storybook/addon-vitest": "^10.2.0",
+    "@storybook/react-vite": "^10.2.0",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "@vitejs/plugin-react": "^4.5.1",
+    "@vitest/browser-playwright": "^4.0.18",
+    "@vitest/coverage-v8": "^4.0.18",
+    "playwright": "^1.58.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "storybook": "^10.2.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vitest": "^4.0.18"
+  }
+}

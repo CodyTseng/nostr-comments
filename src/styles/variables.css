@@ -1,0 +1,90 @@
+:root {
+  /* Base Colors - Override these to customize the theme */
+  --nc-bg: #ffffff;
+  --nc-text: #1f2937;
+  --nc-primary: #319cfc;
+  --nc-error: #dc2626;
+  --nc-success: #16a34a;
+  /* Derived Colors - Automatically computed from base colors */
+  --nc-bg-secondary: color-mix(in srgb, var(--nc-text) 4%, var(--nc-bg));
+  --nc-bg-hover: color-mix(in srgb, var(--nc-text) 6%, var(--nc-bg));
+  --nc-border: color-mix(in srgb, var(--nc-text) 18%, var(--nc-bg));
+  --nc-text-secondary: color-mix(in srgb, var(--nc-text) 60%, var(--nc-bg));
+  --nc-text-muted: color-mix(in srgb, var(--nc-text) 40%, var(--nc-bg));
+  --nc-primary-hover: color-mix(in srgb, var(--nc-primary) 85%, black);
+  --nc-primary-light: color-mix(in srgb, var(--nc-primary) 8%, var(--nc-bg));
+  --nc-error-light: color-mix(in srgb, var(--nc-error) 6%, var(--nc-bg));
+  --nc-success-light: color-mix(in srgb, var(--nc-success) 12%, var(--nc-bg));
+
+  /* Spacing */
+  --nc-space-xs: 3px;
+  --nc-space-sm: 6px;
+  --nc-space-md: 10px;
+  --nc-space-lg: 14px;
+  --nc-space-xl: 20px;
+
+  /* Border Radius */
+  --nc-radius-sm: 6px;
+  --nc-radius-md: 8px;
+  --nc-radius-lg: 10px;
+  --nc-radius-xl: 16px;
+  --nc-radius-full: 9999px;
+
+  /* Typography */
+  --nc-font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica,
+    Arial, sans-serif;
+  --nc-font-size-xs: 11px;
+  --nc-font-size-sm: 12px;
+  --nc-font-size-md: 13px;
+  --nc-font-size-lg: 15px;
+
+  /* Avatar */
+  --nc-avatar-radius: 50%;
+
+  /* Shadows */
+  --nc-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --nc-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --nc-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+  /* Transitions */
+  --nc-transition: 200ms ease-out;
+}
+
+/* Dark Theme - Override base colors and some derived colors for better contrast */
+[data-theme="dark"],
+.nostr-comments[data-theme="dark"] {
+  --nc-bg: #0d1117;
+  --nc-text: #e6edf3;
+  --nc-primary: #58a6ff;
+  --nc-primary-hover: color-mix(in srgb, var(--nc-primary) 85%, white);
+  --nc-error: #f85149;
+  --nc-success: #3fb950;
+  /* Override derived colors for dark mode */
+  --nc-border: #30363d;
+  --nc-bg-secondary: #161b22;
+  --nc-bg-hover: #21262d;
+  --nc-primary-light: rgba(88, 166, 255, 0.15);
+  --nc-error-light: rgba(248, 81, 73, 0.15);
+  --nc-success-light: rgba(63, 185, 80, 0.15);
+}
+
+/* Auto Theme (follows system preference) */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"],
+  .nostr-comments[data-theme="auto"] {
+    --nc-bg: #0d1117;
+    --nc-text: #e6edf3;
+    --nc-primary: #58a6ff;
+    --nc-primary-hover: color-mix(in srgb, var(--nc-primary) 85%, white);
+    --nc-error: #f85149;
+    --nc-success: #3fb950;
+    /* Override derived colors for dark mode */
+    --nc-border: #30363d;
+    --nc-bg-secondary: #161b22;
+    --nc-bg-hover: #21262d;
+    --nc-primary-light: rgba(88, 166, 255, 0.15);
+    --nc-error-light: rgba(248, 81, 73, 0.15);
+    --nc-success-light: rgba(63, 185, 80, 0.15);
+  }
+}
