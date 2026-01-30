@@ -109,7 +109,7 @@
   padding: var(--nc-space-md);
   border: 1px solid var(--nc-border);
   border-radius: var(--nc-radius-md);
-  background: var(--nc-bg);
+  background: color-mix(in srgb, var(--nc-bg) 60%, transparent);
   color: var(--nc-text);
   font-family: inherit;
   font-size: var(--nc-font-size-md);
@@ -356,19 +356,16 @@
   width: 100%;
   padding: var(--nc-space-md);
   margin-top: var(--nc-space-lg);
-  background: var(--nc-bg-secondary);
-  border: 1px solid var(--nc-border);
-  border-radius: var(--nc-radius-md);
-  color: var(--nc-text-secondary);
+  background: transparent;
+  border: none;
+  color: var(--nc-text-muted);
+  font-size: var(--nc-font-size-sm);
   cursor: pointer;
-  transition:
-    background var(--nc-transition),
-    color var(--nc-transition);
+  transition: color var(--nc-transition);
 }
 
 .nostr-comments:not([data-headless="true"]) .nc-load-more:hover:not(:disabled) {
-  background: var(--nc-bg-hover);
-  color: var(--nc-text);
+  color: var(--nc-primary);
 }
 
 .nostr-comments:not([data-headless="true"]) .nc-load-more:disabled {
