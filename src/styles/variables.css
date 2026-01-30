@@ -1,4 +1,4 @@
-:root {
+:where(.nostr-comments) {
   /* Base Colors - Override these to customize the theme */
   --nc-bg: #ffffff;
   --nc-text: #1f2937;
@@ -52,8 +52,7 @@
 }
 
 /* Dark Theme - Override base colors and some derived colors for better contrast */
-[data-theme="dark"],
-.nostr-comments[data-theme="dark"] {
+:where(.nostr-comments[data-theme="dark"]) {
   --nc-bg: #0d1117;
   --nc-text: #e6edf3;
   --nc-primary: #58a6ff;
@@ -71,8 +70,7 @@
 
 /* Auto Theme (follows system preference) */
 @media (prefers-color-scheme: dark) {
-  [data-theme="auto"],
-  .nostr-comments[data-theme="auto"] {
+  :where(.nostr-comments[data-theme="auto"]) {
     --nc-bg: #0d1117;
     --nc-text: #e6edf3;
     --nc-primary: #58a6ff;
