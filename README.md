@@ -10,9 +10,7 @@ A web comment component based on the Nostr network, implementing the [NIP-22](ht
   - NIP-46 Bunker remote signing
   - Temporary account (locally generated key pair)
 - **Multilingual**: 20 languages built-in (en, zh-CN, zh-TW, ja, ko, es, fr, de, pt, ru, ar, it, nl, pl, tr, vi, th, id, hi, uk), supports custom translations
-- **Profile Links**: Click avatar or username to view profile on [Jumble](https://jumble.social)
 - **Themes**: Light, dark, auto (follows system), easy customization with a few CSS variables
-- **Transparent Background**: No default background, blends into any host page
 - **Headless Mode**: Disable default styles for fully custom UI
 
 ## Installation
@@ -32,25 +30,6 @@ import "nostr-comments/style.css";
 function App() {
   return <NostrComments url="https://example.com/blog/my-post" locale="en" />;
 }
-```
-
-### CDN Usage
-
-```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/nostr-comments/dist/nostr-comments.css"
-/>
-<script src="https://cdn.jsdelivr.net/npm/nostr-comments/dist/nostr-comments.umd.js"></script>
-
-<div id="comments"></div>
-
-<script>
-  NostrComments.render("#comments", {
-    url: "https://example.com/blog/my-post",
-    locale: "en",
-  });
-</script>
 ```
 
 ## API
