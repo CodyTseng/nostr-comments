@@ -1,6 +1,6 @@
 {
   "name": "nostr-comments",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Nostr-based web comment component using NIP-22 protocol",
   "type": "module",
   "main": "./dist/nostr-comments.cjs",
