@@ -59,6 +59,8 @@ export {
   getRootUrl,
 } from "./utils/nip22";
 
+export { isValidPubkey } from "./utils/pubkey";
+
 export {
   getColorFromPubkey,
   generateAvatarSvg,

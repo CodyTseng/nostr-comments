@@ -1,5 +1,6 @@
 import { seenOn } from "@nostr/gadgets/store";
 import type { EventTemplate, NostrEvent } from "nostr-tools";
+import { isValidPubkey } from "./pubkey";
 
 const COMMENT_KIND = 1111;
 
@@ -11,7 +12,8 @@ export interface WebCommentOptions {
 }
 
 export function buildWebComment(options: WebCommentOptions): EventTemplate {
-  const { url, content, mention, parentEvent } = options;
+  const { url, content, parentEvent } = options;
+  const mention = options.mention && isValidPubkey(options.mention) ? options.mention : undefined;
 
   const tags: string[][] = [
     ["I", url],

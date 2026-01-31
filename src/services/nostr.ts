@@ -2,6 +2,7 @@ import { pool } from "@nostr/gadgets/global";
 import { loadRelayList } from "@nostr/gadgets/lists";
 import type { Filter, NostrEvent } from "nostr-tools";
 import { normalizeURL } from "nostr-tools/utils";
+import { isValidPubkey } from "../utils/pubkey";
 
 const DEFAULT_RELAYS = [
   "wss://relay.damus.io/",
@@ -45,7 +46,7 @@ export async function getRelays(relays?: string[], mention?: string) {
   if (relays && relays.length > 0) {
     relays.forEach((r) => relaySet.add(normalizeURL(r)));
   }
-  if (mention) {
+  if (mention && isValidPubkey(mention)) {
     const relayList = await loadRelayList(mention);
     relayList.items.forEach((item) => {
       if (item.read) {
