@@ -65,7 +65,8 @@ export interface Translations {
 
 export interface NostrCommentsProps {
   url: string;
-  authorPubkeys?: string[];
+  /** Public key to mention in comments (receives notifications) */
+  mention?: string;
   relays?: string[];
   pageSize?: number;
   locale?: string;

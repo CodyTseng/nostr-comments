@@ -12,7 +12,7 @@ import { ensureStyles } from "./utils/ensureStyles";
 
 function NostrCommentsInner({
   url,
-  authorPubkeys,
+  mention,
   relays,
   pageSize = 50,
   enabledSigners = ["nip07", "bunker", "temp"],
@@ -37,7 +37,7 @@ function NostrCommentsInner({
     reload,
     loadMore,
     addEvent,
-  } = useComments({ url, relays, authors: authorPubkeys, pageSize, pow });
+  } = useComments({ url, relays, mention, pageSize, pow });
 
   const handlePublished = (event: NostrEvent) => {
     addEvent(event);
@@ -71,7 +71,7 @@ function NostrCommentsInner({
       <CommentEditor
         url={url}
         relays={relays}
-        authorPubkeys={authorPubkeys}
+        mention={mention}
         pow={pow}
         parentEvent={parentEvent}
         onClearParent={() => setParentEvent(null)}

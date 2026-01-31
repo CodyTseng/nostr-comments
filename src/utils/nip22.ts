@@ -7,21 +7,19 @@ export interface WebCommentOptions {
   url: string;
   content: string;
   parentEvent?: NostrEvent | null;
-  authorPubkeys?: string[];
+  mention?: string;
 }
 
 export function buildWebComment(options: WebCommentOptions): EventTemplate {
-  const { url, content, authorPubkeys, parentEvent } = options;
-  const author =
-    authorPubkeys && authorPubkeys.length > 0 ? authorPubkeys[0] : null;
+  const { url, content, mention, parentEvent } = options;
 
   const tags: string[][] = [
     ["I", url],
     ["K", "web"],
   ];
 
-  if (author) {
-    tags.push(["P", author]);
+  if (mention) {
+    tags.push(["P", mention]);
   }
 
   if (parentEvent) {
@@ -38,8 +36,8 @@ export function buildWebComment(options: WebCommentOptions): EventTemplate {
   } else {
     tags.push(["i", url]);
     tags.push(["k", "web"]);
-    if (author) {
-      tags.push(["p", author]);
+    if (mention) {
+      tags.push(["p", mention]);
     }
   }
 

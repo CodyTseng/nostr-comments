@@ -11,14 +11,14 @@ import type { Comment } from "../types";
 
 export interface UseCommentsOptions {
   url: string;
-  authors?: string[];
+  mention?: string;
   relays?: string[];
   pageSize?: number;
   pow?: number;
 }
 
 export function useComments(options: UseCommentsOptions) {
-  const { url, relays, authors, pageSize = 50, pow = 18 } = options;
+  const { url, relays, mention, pageSize = 50, pow = 18 } = options;
 
   const [events, setEvents] = useState<NostrEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,8 +28,6 @@ export function useComments(options: UseCommentsOptions) {
 
   // Use JSON string as stable dependency for relays array
   const relaysKey = JSON.stringify(relays);
-  // Use JSON string as stable dependency for authors array
-  const authorsKey = JSON.stringify(authors || []);
 
   const loadComments = useCallback(async () => {
     setLoading(true);
@@ -41,7 +39,7 @@ export function useComments(options: UseCommentsOptions) {
 
     const unsub = subscribeComments({
       url,
-      relays: await getRelays(relays, authors),
+      relays: await getRelays(relays, mention),
       limit: pageSize,
       onEvent: (evt) => {
         if (hasEosed) {
@@ -69,7 +67,7 @@ export function useComments(options: UseCommentsOptions) {
     });
 
     return unsub;
-  }, [url, pageSize, relaysKey, authorsKey]);
+  }, [url, pageSize, relaysKey, mention]);
 
   const loadMore = useCallback(async () => {
     if (loading || loadingMore || until === undefined) return;
@@ -78,7 +76,7 @@ export function useComments(options: UseCommentsOptions) {
     try {
       const moreEvents = await fetchComments({
         url,
-        relays: await getRelays(relays, authors),
+        relays: await getRelays(relays, mention),
         limit: pageSize,
         until,
       });
@@ -100,7 +98,7 @@ export function useComments(options: UseCommentsOptions) {
     } finally {
       setLoadingMore(false);
     }
-  }, [url, pageSize, loading, loadingMore, until, relaysKey, authorsKey]);
+  }, [url, pageSize, loading, loadingMore, until, relaysKey, mention]);
 
   useEffect(() => {
     const promise = loadComments();

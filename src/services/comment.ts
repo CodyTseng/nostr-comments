@@ -74,7 +74,7 @@ export async function publishComment(
     content: string;
     parentEvent?: NostrEvent | null;
     relays?: string[];
-    authorPubkeys?: string[];
+    mention?: string;
     pow?: number;
   },
 ): Promise<NostrEvent> {
@@ -88,10 +88,7 @@ export async function publishComment(
   }
 
   const event = await signer.signEvent(template);
-  await publishEvent(
-    await getRelays(options.relays, options.authorPubkeys),
-    event,
-  );
+  await publishEvent(await getRelays(options.relays, options.mention), event);
   return event;
 }
 

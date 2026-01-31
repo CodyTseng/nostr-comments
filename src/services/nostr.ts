@@ -40,26 +40,21 @@ export async function publishEvent(
   await Promise.any(pool.publish(relays, event));
 }
 
-export async function getRelays(relays?: string[], authors?: string[]) {
+export async function getRelays(relays?: string[], mention?: string) {
   const relaySet = new Set<string>();
   if (relays && relays.length > 0) {
     relays.forEach((r) => relaySet.add(normalizeURL(r)));
-  } else if (authors && authors.length > 0) {
-    const relayLists = await Promise.all(
-      authors.map((author) => loadRelayList(author)),
-    );
-    relayLists.forEach((list) => {
-      list.items.forEach((item) => {
-        if (item.read) {
-          relaySet.add(item.url);
-        }
-      });
+  }
+  if (mention) {
+    const relayList = await loadRelayList(mention);
+    relayList.items.forEach((item) => {
+      if (item.read) {
+        relaySet.add(item.url);
+      }
     });
   }
-
   if (relaySet.size === 0) {
     getDefaultRelays().forEach((r) => relaySet.add(r));
   }
-
   return Array.from(relaySet);
 }

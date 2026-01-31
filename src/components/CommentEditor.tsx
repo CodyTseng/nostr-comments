@@ -9,7 +9,7 @@ import { Username } from "./Username";
 interface CommentEditorProps {
   url: string;
   relays?: string[];
-  authorPubkeys?: string[];
+  mention?: string;
   pow?: number;
   parentEvent?: NostrEvent | null;
   onClearParent?: () => void;
@@ -22,7 +22,7 @@ interface CommentEditorProps {
 export function CommentEditor({
   url,
   relays,
-  authorPubkeys,
+  mention,
   pow,
   parentEvent,
   onClearParent,
@@ -53,7 +53,7 @@ export function CommentEditor({
         content: content.trim(),
         parentEvent,
         relays,
-        authorPubkeys,
+        mention,
         pow,
       });
 

@@ -39,7 +39,7 @@ function App() {
 | Prop                 | Type                                | Default            | Description                                          |
 | -------------------- | ----------------------------------- | ------------------ | ---------------------------------------------------- |
 | `url`                | `string`                            | **Required**       | Web page URL, used to identify comment scope         |
-| `authorPubkeys`      | `string[]`                          | -                  | List of article author public keys for notifications |
+| `mention`            | `string`                            | -                  | Public key to mention in comments (receives notifications) |
 | `relays`             | `string[]`                          | Default relay list | List of Nostr relay addresses                        |
 | `pageSize`           | `number`                            | `50`               | Number of comments per page                          |
 | `locale`             | `string`                            | Auto-detect        | Interface language (20 languages supported)          |
