@@ -3,6 +3,7 @@
 
 # Build
 dist/
+demo-dist/
 
 # Node modules
 node_modules/

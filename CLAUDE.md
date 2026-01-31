@@ -11,8 +11,8 @@ Nostr Comments is a web component library for decentralized commenting using the
 - `npm run dev` - Start dev server on port 5175
 - `npm run build` - Build library (vite build + TypeScript declarations)
 - `npm run preview` - Preview built distribution
-- `npm run storybook` - Start Storybook on port 6006 (component development and debugging)
-- `npm run build-storybook` - Build static Storybook site
+- `npm run demo` - Start demo site dev server
+- `npm run build:demo` - Build demo site to `demo-dist/`
 
 No test or lint commands are configured.
 
@@ -29,9 +29,8 @@ No test or lint commands are configured.
 ├── /i18n            # Internationalization (20 languages in /locales)
 ├── /utils           # Helpers (nip22.ts, avatar.ts, storage.ts)
 ├── /styles          # CSS with custom properties for theming
-├── NostrComments.tsx  # Main component wrapper
-└── *.stories.tsx    # Storybook stories (component demos)
-/.storybook         # Storybook configuration
+└── NostrComments.tsx  # Main component wrapper
+/demo               # Demo site (App.tsx, demo.css)
 ```
 
 ### Key Patterns
