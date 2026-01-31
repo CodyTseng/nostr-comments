@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { NostrEvent } from "nostr-tools";
 import { useSigner } from "../hooks/useSigner";
-import { publishComment, publishReply } from "../services/comment";
+import { publishComment } from "../services/comment";
 import { useI18n } from "../i18n";
 import { Avatar } from "./Avatar";
 import { Username } from "./Username";
@@ -10,6 +10,7 @@ interface CommentEditorProps {
   url: string;
   relays?: string[];
   authorPubkeys?: string[];
+  pow?: number;
   parentEvent?: NostrEvent | null;
   onClearParent?: () => void;
   onPublished?: (event: NostrEvent) => void;
@@ -22,6 +23,7 @@ export function CommentEditor({
   url,
   relays,
   authorPubkeys,
+  pow,
   parentEvent,
   onClearParent,
   onPublished,
@@ -46,24 +48,14 @@ export function CommentEditor({
 
     setPublishing(true);
     try {
-      let event: NostrEvent;
-
-      if (parentEvent) {
-        event = await publishReply(signer, {
-          url,
-          content: content.trim(),
-          parentEvent,
-          relays,
-          authorPubkeys,
-        });
-      } else {
-        event = await publishComment(signer, {
-          url,
-          content: content.trim(),
-          relays,
-          authorPubkeys,
-        });
-      }
+      const event = await publishComment(signer, {
+        url,
+        content: content.trim(),
+        parentEvent,
+        relays,
+        authorPubkeys,
+        pow,
+      });
 
       setContent("");
       onClearParent?.();
@@ -116,6 +108,7 @@ export function CommentEditor({
             placeholder={t("writeComment")}
             className="nc-editor__textarea"
             rows={3}
+            disabled={publishing}
           />
 
           <div className="nc-editor__actions">
@@ -124,7 +117,11 @@ export function CommentEditor({
               disabled={!content.trim() || publishing || !isLoggedIn}
               className="nc-editor__submit"
             >
-              {publishing ? t("publishing") : t("publish")}
+              {publishing
+                ? pow
+                  ? t("computing")
+                  : t("publishing")
+                : t("publish")}
             </button>
           </div>
         </div>

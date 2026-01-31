@@ -7,6 +7,7 @@ export const ja: Translations = {
   replyTo: "返信先",
   publish: "投稿",
   publishing: "投稿中...",
+  computing: "計算中...",
   cancel: "キャンセル",
   login: "ログイン",
   logout: "ログアウト",

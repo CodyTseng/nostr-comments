@@ -1,4 +1,5 @@
 import type { NostrEvent } from "nostr-tools";
+import { getPow } from "nostr-tools/nip13";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   buildCommentTree,
@@ -13,10 +14,11 @@ export interface UseCommentsOptions {
   authors?: string[];
   relays?: string[];
   pageSize?: number;
+  pow?: number;
 }
 
 export function useComments(options: UseCommentsOptions) {
-  const { url, relays, authors, pageSize = 50 } = options;
+  const { url, relays, authors, pageSize = 50, pow = 18 } = options;
 
   const [events, setEvents] = useState<NostrEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -115,7 +117,11 @@ export function useComments(options: UseCommentsOptions) {
   }, []);
 
   const { comments, commentCount } = useMemo(() => {
-    const tree = buildCommentTree(events);
+    // Filter events by POW requirement
+    const filteredEvents =
+      pow && pow > 0 ? events.filter((evt) => getPow(evt.id) >= pow) : events;
+
+    const tree = buildCommentTree(filteredEvents);
     let count = 0;
     const countAll = (items: Comment[]) => {
       items.forEach((item) => {
@@ -125,7 +131,7 @@ export function useComments(options: UseCommentsOptions) {
     };
     countAll(tree);
     return { comments: tree, commentCount: count };
-  }, [events]);
+  }, [events, pow]);
 
   return {
     comments,

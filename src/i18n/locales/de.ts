@@ -7,6 +7,7 @@ export const de: Translations = {
   replyTo: "Antworten auf",
   publish: "Veröffentlichen",
   publishing: "Veröffentliche...",
+  computing: "Berechne...",
   cancel: "Abbrechen",
   login: "Anmelden",
   logout: "Abmelden",

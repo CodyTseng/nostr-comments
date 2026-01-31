@@ -7,6 +7,7 @@ export const uk: Translations = {
   replyTo: "Відповісти",
   publish: "Опублікувати",
   publishing: "Публікація...",
+  computing: "Обчислення...",
   cancel: "Скасувати",
   login: "Увійти",
   logout: "Вийти",

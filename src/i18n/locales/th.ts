@@ -7,6 +7,7 @@ export const th: Translations = {
   replyTo: "ตอบกลับถึง",
   publish: "เผยแพร่",
   publishing: "กำลังเผยแพร่...",
+  computing: "กำลังคำนวณ...",
   cancel: "ยกเลิก",
   login: "เข้าสู่ระบบ",
   logout: "ออกจากระบบ",

@@ -7,6 +7,7 @@ export const tr: Translations = {
   replyTo: "Yanıtla",
   publish: "Yayınla",
   publishing: "Yayınlanıyor...",
+  computing: "Hesaplanıyor...",
   cancel: "İptal",
   login: "Giriş yap",
   logout: "Çıkış yap",

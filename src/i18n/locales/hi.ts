@@ -7,6 +7,7 @@ export const hi: Translations = {
   replyTo: "जवाब दें",
   publish: "प्रकाशित करें",
   publishing: "प्रकाशित हो रहा है...",
+  computing: "गणना हो रही है...",
   cancel: "रद्द करें",
   login: "लॉग इन करें",
   logout: "लॉग आउट करें",

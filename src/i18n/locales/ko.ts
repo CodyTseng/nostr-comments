@@ -7,6 +7,7 @@ export const ko: Translations = {
   replyTo: "답글 대상",
   publish: "게시",
   publishing: "게시 중...",
+  computing: "계산 중...",
   cancel: "취소",
   login: "로그인",
   logout: "로그아웃",

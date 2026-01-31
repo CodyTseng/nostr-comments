@@ -7,6 +7,7 @@ export const ru: Translations = {
   replyTo: "Ответить",
   publish: "Опубликовать",
   publishing: "Публикация...",
+  computing: "Вычисление...",
   cancel: "Отмена",
   login: "Войти",
   logout: "Выйти",

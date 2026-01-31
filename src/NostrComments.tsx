@@ -16,6 +16,7 @@ function NostrCommentsInner({
   relays,
   pageSize = 50,
   enabledSigners = ["nip07", "bunker", "temp"],
+  pow = 18,
   classNames = {},
   onCommentPublished,
   onError,
@@ -36,7 +37,7 @@ function NostrCommentsInner({
     reload,
     loadMore,
     addEvent,
-  } = useComments({ url, relays, authors: authorPubkeys, pageSize });
+  } = useComments({ url, relays, authors: authorPubkeys, pageSize, pow });
 
   const handlePublished = (event: NostrEvent) => {
     addEvent(event);
@@ -71,6 +72,7 @@ function NostrCommentsInner({
         url={url}
         relays={relays}
         authorPubkeys={authorPubkeys}
+        pow={pow}
         parentEvent={parentEvent}
         onClearParent={() => setParentEvent(null)}
         onPublished={handlePublished}

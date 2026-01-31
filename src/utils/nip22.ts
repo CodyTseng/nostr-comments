@@ -6,61 +6,42 @@ const COMMENT_KIND = 1111;
 export interface WebCommentOptions {
   url: string;
   content: string;
-  authorPubkeys?: string[];
-}
-
-export interface ReplyCommentOptions {
-  url: string;
-  content: string;
-  parentEvent: NostrEvent;
+  parentEvent?: NostrEvent | null;
   authorPubkeys?: string[];
 }
 
 export function buildWebComment(options: WebCommentOptions): EventTemplate {
-  const { url, content, authorPubkeys } = options;
-
-  const tags: string[][] = [
-    ["I", url],
-    ["K", "web"],
-    ["i", url],
-    ["k", "web"],
-  ];
-
-  if (authorPubkeys && authorPubkeys.length > 0) {
-    tags.push(["P", authorPubkeys[0]]);
-    tags.push(["p", authorPubkeys[0]]);
-  }
-
-  return {
-    kind: COMMENT_KIND,
-    content,
-    tags,
-    created_at: Math.floor(Date.now() / 1000),
-  };
-}
-
-export function buildReplyComment(options: ReplyCommentOptions): EventTemplate {
-  const { url, content, parentEvent, authorPubkeys } = options;
+  const { url, content, authorPubkeys, parentEvent } = options;
+  const author =
+    authorPubkeys && authorPubkeys.length > 0 ? authorPubkeys[0] : null;
 
   const tags: string[][] = [
     ["I", url],
     ["K", "web"],
   ];
 
-  if (authorPubkeys && authorPubkeys.length > 0) {
-    tags.push(["P", authorPubkeys[0]]);
+  if (author) {
+    tags.push(["P", author]);
   }
 
-  const hints = seenOn(parentEvent);
+  if (parentEvent) {
+    const hints = seenOn(parentEvent);
 
-  tags.push([
-    "e",
-    parentEvent.id,
-    hints.length ? hints[0] : "",
-    parentEvent.pubkey,
-  ]);
-  tags.push(["k", "1111"]);
-  tags.push(["p", parentEvent.pubkey]);
+    tags.push([
+      "e",
+      parentEvent.id,
+      hints.length ? hints[0] : "",
+      parentEvent.pubkey,
+    ]);
+    tags.push(["k", "1111"]);
+    tags.push(["p", parentEvent.pubkey]);
+  } else {
+    tags.push(["i", url]);
+    tags.push(["k", "web"]);
+    if (author) {
+      tags.push(["p", author]);
+    }
+  }
 
   return {
     kind: COMMENT_KIND,

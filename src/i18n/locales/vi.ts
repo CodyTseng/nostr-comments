@@ -7,6 +7,7 @@ export const vi: Translations = {
   replyTo: "Trả lời",
   publish: "Đăng",
   publishing: "Đang đăng...",
+  computing: "Đang tính toán...",
   cancel: "Hủy",
   login: "Đăng nhập",
   logout: "Đăng xuất",

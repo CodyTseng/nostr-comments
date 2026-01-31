@@ -7,6 +7,7 @@ export const zhCN: Translations = {
   replyTo: "回复",
   publish: "发布",
   publishing: "发布中...",
+  computing: "计算中...",
   cancel: "取消",
   login: "登录",
   logout: "退出登录",

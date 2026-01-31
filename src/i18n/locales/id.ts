@@ -7,6 +7,7 @@ export const id: Translations = {
   replyTo: "Balas ke",
   publish: "Publikasikan",
   publishing: "Mempublikasikan...",
+  computing: "Menghitung...",
   cancel: "Batal",
   login: "Masuk",
   logout: "Keluar",

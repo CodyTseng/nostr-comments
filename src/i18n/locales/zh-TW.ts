@@ -7,6 +7,7 @@ export const zhTW: Translations = {
   replyTo: "回覆給",
   publish: "發布",
   publishing: "發布中...",
+  computing: "計算中...",
   cancel: "取消",
   login: "登入",
   logout: "登出",

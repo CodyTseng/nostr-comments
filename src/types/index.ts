@@ -23,6 +23,7 @@ export interface Translations {
   replyTo: string;
   publish: string;
   publishing: string;
+  computing: string;
   cancel: string;
   login: string;
   logout: string;
@@ -79,6 +80,8 @@ export interface NostrCommentsProps {
     loginModal?: string;
   };
   enabledSigners?: ("nip07" | "bunker" | "temp")[];
+  /** POW difficulty (number of leading zero bits). Requires more computation time but helps prevent spam. */
+  pow?: number;
   onCommentPublished?: (event: NostrEvent) => void;
   onError?: (error: Error) => void;
 }

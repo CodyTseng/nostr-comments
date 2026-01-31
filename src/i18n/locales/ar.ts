@@ -7,6 +7,7 @@ export const ar: Translations = {
   replyTo: "الرد على",
   publish: "نشر",
   publishing: "جارِ النشر...",
+  computing: "جارِ الحساب...",
   cancel: "إلغاء",
   login: "تسجيل الدخول",
   logout: "تسجيل الخروج",

@@ -39,7 +39,6 @@ export {
   subscribeComments,
   fetchComments,
   publishComment,
-  publishReply,
   buildCommentTree,
 } from "./services/comment";
 
@@ -55,7 +54,6 @@ export {
 // Utils
 export {
   buildWebComment,
-  buildReplyComment,
   isReply,
   getParentId,
   getRootUrl,

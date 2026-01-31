@@ -48,6 +48,7 @@ function App() {
 | `headless`           | `boolean`                           | `false`            | Enable Headless mode                                 |
 | `classNames`         | `object`                            | -                  | Custom CSS class names                               |
 | `enabledSigners`     | `('nip07' \| 'bunker' \| 'temp')[]` | All enabled        | Enabled login methods                                |
+| `pow`                | `number`                            | `18`               | POW difficulty (leading zero bits) to prevent spam   |
 | `onCommentPublished` | `(event: NostrEvent) => void`       | -                  | Callback when comment is published                   |
 | `onError`            | `(error: Error) => void`            | -                  | Error callback                                       |
 
@@ -95,6 +96,14 @@ function App() {
   }}
 />
 ```
+
+### Anti-Spam with POW
+
+```tsx
+<NostrComments url="https://example.com/post/123" pow={16} />
+```
+
+Requires commenters to compute a proof-of-work (NIP-13) before publishing. Higher values = more computation time = stronger spam prevention. Recommended: 8-16 bits.
 
 ### Extension Login Only
 

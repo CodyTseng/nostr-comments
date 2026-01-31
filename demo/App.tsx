@@ -29,6 +29,7 @@ const DEFAULT_PRIMARY = "#319cfc";
 const DEFAULT_BG = "#ffffff";
 const DEFAULT_TEXT = "#1f2937";
 const DEFAULT_RADIUS = 8;
+const DEFAULT_POW = 18;
 
 function App() {
   const [theme, setTheme] = useState<"light" | "dark" | "auto">("auto");
@@ -40,6 +41,7 @@ function App() {
   const [bgColor, setBgColor] = useState(DEFAULT_BG);
   const [textColor, setTextColor] = useState(DEFAULT_TEXT);
   const [radius, setRadius] = useState(DEFAULT_RADIUS);
+  const [pow, setPow] = useState(DEFAULT_POW);
   const [url, setUrl] = useState(() =>
     typeof window !== "undefined"
       ? window.location.href
@@ -61,6 +63,7 @@ function App() {
     const props: string[] = [`  url="${url}"`];
     if (theme !== "auto") props.push(`  theme="${theme}"`);
     if (locale !== "en") props.push(`  locale="${locale}"`);
+    if (pow != 18) props.push(`  pow={${pow}}`);
 
     const cssVars: string[] = [];
     if (primaryColor !== DEFAULT_PRIMARY)
@@ -78,7 +81,7 @@ function App() {
     code += `<NostrComments\n${props.join("\n")}\n/>`;
 
     return code;
-  }, [theme, locale, url, primaryColor, bgColor, textColor, radius]);
+  }, [theme, locale, url, pow, primaryColor, bgColor, textColor, radius]);
 
   const handleCopyInstall = async () => {
     await navigator.clipboard.writeText("npm install nostr-comments");
@@ -99,6 +102,7 @@ function App() {
     setBgColor(DEFAULT_BG);
     setTextColor(DEFAULT_TEXT);
     setRadius(DEFAULT_RADIUS);
+    setPow(DEFAULT_POW);
     setUrl(window.location.href);
   };
 
@@ -224,6 +228,19 @@ function App() {
             />
           </div>
 
+          <div className="demo-control">
+            <label>
+              POW: {pow} {pow > 0 ? "bits" : "(disabled)"}
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="24"
+              value={pow}
+              onChange={(e) => setPow(Number(e.target.value))}
+            />
+          </div>
+
           <button className="demo-reset" onClick={handleReset}>
             <RotateCcw size={14} />
             <span>Reset</span>
@@ -233,7 +250,12 @@ function App() {
         <div className="demo-content">
           <main className="demo-main">
             {customStylesCSS && <style>{customStylesCSS}</style>}
-            <NostrComments url={url} theme={theme} locale={locale} />
+            <NostrComments
+              url={url}
+              theme={theme}
+              locale={locale}
+              pow={pow || undefined}
+            />
           </main>
 
           <aside className="demo-code">

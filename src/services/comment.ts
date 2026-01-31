@@ -1,10 +1,7 @@
 import type { NostrEvent } from "nostr-tools";
 import { subscribeEvents, queryEvents, publishEvent, getRelays } from "./nostr";
-import {
-  buildWebComment,
-  buildReplyComment,
-  getParentId,
-} from "../utils/nip22";
+import { buildWebComment, getParentId } from "../utils/nip22";
+import { minePowAsync } from "../utils/pow-worker";
 import type { Signer } from "../signers/types";
 import type { Comment } from "../types";
 
@@ -75,30 +72,21 @@ export async function publishComment(
   options: {
     url: string;
     content: string;
+    parentEvent?: NostrEvent | null;
     relays?: string[];
     authorPubkeys?: string[];
+    pow?: number;
   },
 ): Promise<NostrEvent> {
-  const template = buildWebComment(options);
-  const event = await signer.signEvent(template);
-  await publishEvent(
-    await getRelays(options.relays, options.authorPubkeys),
-    event,
-  );
-  return event;
-}
+  let template = buildWebComment(options);
 
-export async function publishReply(
-  signer: Signer,
-  options: {
-    url: string;
-    content: string;
-    parentEvent: NostrEvent;
-    relays?: string[];
-    authorPubkeys?: string[];
-  },
-): Promise<NostrEvent> {
-  const template = buildReplyComment(options);
+  if (options.pow && options.pow > 0) {
+    const pubkey = await signer.getPublicKey();
+    const unsigned = { ...template, pubkey };
+    const mined = await minePowAsync(unsigned, options.pow);
+    template = { ...template, tags: mined.tags, created_at: mined.created_at };
+  }
+
   const event = await signer.signEvent(template);
   await publishEvent(
     await getRelays(options.relays, options.authorPubkeys),
