@@ -299,7 +299,7 @@
 }
 
 .demo-code {
-  width: 320px;
+  width: 420px;
   flex-shrink: 0;
   background: var(--code-bg);
   border-left: 1px solid var(--border);

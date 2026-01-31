@@ -28,7 +28,7 @@ const LOCALES = [
 const DEFAULT_PRIMARY = "#319cfc";
 const DEFAULT_BG = "#ffffff";
 const DEFAULT_TEXT = "#1f2937";
-const DEFAULT_RADIUS = 12;
+const DEFAULT_RADIUS = 8;
 
 function App() {
   const [theme, setTheme] = useState<"light" | "dark" | "auto">("auto");
