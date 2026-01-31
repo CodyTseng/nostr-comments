@@ -25,7 +25,6 @@ npm install nostr-comments
 
 ```tsx
 import { NostrComments } from "nostr-comments";
-import "nostr-comments/style.css";
 
 function App() {
   return <NostrComments url="https://example.com/blog/my-post" locale="en" />;
@@ -36,21 +35,22 @@ function App() {
 
 ### NostrComments Component Props
 
-| Prop                 | Type                                | Default            | Description                                          |
-| -------------------- | ----------------------------------- | ------------------ | ---------------------------------------------------- |
-| `url`                | `string`                            | **Required**       | Web page URL, used to identify comment scope         |
+| Prop                 | Type                                | Default            | Description                                                |
+| -------------------- | ----------------------------------- | ------------------ | ---------------------------------------------------------- |
+| `url`                | `string`                            | **Required**       | Web page URL, used to identify comment scope               |
 | `mention`            | `string`                            | -                  | Public key to mention in comments (receives notifications) |
-| `relays`             | `string[]`                          | Default relay list | List of Nostr relay addresses                        |
-| `pageSize`           | `number`                            | `50`               | Number of comments per page                          |
-| `locale`             | `string`                            | Auto-detect        | Interface language (20 languages supported)          |
-| `translations`       | `Partial<Translations>`             | -                  | Custom translation text                              |
-| `theme`              | `'light' \| 'dark' \| 'auto'`       | `'auto'`           | Theme mode                                           |
-| `headless`           | `boolean`                           | `false`            | Enable Headless mode                                 |
-| `classNames`         | `object`                            | -                  | Custom CSS class names                               |
-| `enabledSigners`     | `('nip07' \| 'bunker' \| 'temp')[]` | All enabled        | Enabled login methods                                |
-| `pow`                | `number`                            | `18`               | POW difficulty (leading zero bits) to prevent spam   |
-| `onCommentPublished` | `(event: NostrEvent) => void`       | -                  | Callback when comment is published                   |
-| `onError`            | `(error: Error) => void`            | -                  | Error callback                                       |
+| `relays`             | `string[]`                          | Default relay list | List of Nostr relay addresses                              |
+| `pageSize`           | `number`                            | `50`               | Number of comments per page                                |
+| `locale`             | `string`                            | Auto-detect        | Interface language (20 languages supported)                |
+| `translations`       | `Partial<Translations>`             | -                  | Custom translation text                                    |
+| `theme`              | `'light' \| 'dark' \| 'auto'`       | `'auto'`           | Theme mode                                                 |
+| `headless`           | `boolean`                           | `false`            | Enable Headless mode                                       |
+| `classNames`         | `object`                            | -                  | Custom CSS class names                                     |
+| `signer`             | `Signer`                            | -                  | External signer instance (skips login modal when provided) |
+| `enabledSigners`     | `('nip07' \| 'bunker' \| 'temp')[]` | All enabled        | Enabled login methods                                      |
+| `pow`                | `number`                            | `18`               | POW difficulty (leading zero bits) to prevent spam         |
+| `onCommentPublished` | `(event: NostrEvent) => void`       | -                  | Callback when comment is published                         |
+| `onError`            | `(error: Error) => void`            | -                  | Error callback                                             |
 
 ### classNames Object
 
@@ -100,15 +100,37 @@ function App() {
 ### Anti-Spam with POW
 
 ```tsx
-<NostrComments url="https://example.com/post/123" pow={16} />
+<NostrComments url="https://example.com/post/123" pow={18} />
 ```
 
-Requires commenters to compute a proof-of-work (NIP-13) before publishing. Higher values = more computation time = stronger spam prevention. Recommended: 8-16 bits.
+Requires commenters to compute a proof-of-work (NIP-13) before publishing. Higher values = more computation time = stronger spam prevention. Recommended: 10-20 bits.
 
 ### Extension Login Only
 
 ```tsx
 <NostrComments url="https://example.com/post/123" enabledSigners={["nip07"]} />
+```
+
+### External Signer
+
+Pass your own signer instance to skip the built-in login modal:
+
+```tsx
+import { NostrComments, Nip07Signer, TempSigner } from "nostr-comments";
+
+// Use NIP-07 extension
+const signer = new Nip07Signer();
+
+// Or use a temporary signer
+const signer = new TempSigner();
+
+// Or any object that implements the Signer interface
+const customSigner = {
+  getPublicKey: async () => "your-pubkey",
+  signEvent: async (event) => signedEvent,
+};
+
+<NostrComments url="https://example.com/post/123" signer={signer} />;
 ```
 
 ### Headless Mode
@@ -169,8 +191,10 @@ For dark mode, override the base colors under `[data-theme="dark"]` or `[data-th
 
   /* Border Radius */
   --nc-radius-sm: 8px;
+  /* button, textarea radius */
   --nc-radius-md: 12px;
   --nc-radius-lg: 16px;
+  /* modal radius */
   --nc-radius-xl: 24px;
 
   /* Avatar Border Radius */

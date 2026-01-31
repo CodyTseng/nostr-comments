@@ -1,4 +1,5 @@
 import type { NostrEvent } from "nostr-tools";
+import type { Signer } from "../signers/types";
 
 export interface Comment {
   event: NostrEvent;
@@ -80,6 +81,8 @@ export interface NostrCommentsProps {
     editor?: string;
     loginModal?: string;
   };
+  /** External signer instance. When provided, the login modal will be skipped. */
+  signer?: Signer;
   enabledSigners?: ("nip07" | "bunker" | "temp")[];
   /** POW difficulty (number of leading zero bits). Requires more computation time but helps prevent spam. */
   pow?: number;

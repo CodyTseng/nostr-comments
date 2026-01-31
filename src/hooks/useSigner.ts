@@ -37,6 +37,27 @@ export function isLoggedIn() {
   return state.signer !== null;
 }
 
+export async function setExternalSigner(signer: Signer): Promise<boolean> {
+  setState({ loading: true, error: null });
+
+  try {
+    const pubkey = await signer.getPublicKey();
+    setState({
+      signer,
+      signerInfo: { type: "nip07", pubkey }, // Use nip07 as default type for external signers
+      loading: false,
+      error: null,
+    });
+    return true;
+  } catch (err) {
+    setState({
+      loading: false,
+      error: err instanceof Error ? err.message : "Failed to get public key",
+    });
+    return false;
+  }
+}
+
 export function useSigner() {
   const { signer, signerInfo, loading, error } = useSyncExternalStore(
     subscribe,

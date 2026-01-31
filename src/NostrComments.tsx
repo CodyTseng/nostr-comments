@@ -4,7 +4,7 @@ import { CommentEditor } from "./components/CommentEditor";
 import { CommentList } from "./components/CommentList";
 import { LoginModal } from "./components/LoginModal";
 import { useComments } from "./hooks/useComments";
-import { useSigner } from "./hooks/useSigner";
+import { useSigner, setExternalSigner } from "./hooks/useSigner";
 import { I18nProvider, useI18n } from "./i18n";
 import type { SignerType } from "./signers/types";
 import type { NostrCommentsProps } from "./types";
@@ -15,6 +15,7 @@ function NostrCommentsInner({
   mention,
   relays,
   pageSize = 50,
+  signer: externalSigner,
   enabledSigners = ["nip07", "bunker", "temp"],
   pow = 18,
   classNames = {},
@@ -25,7 +26,22 @@ function NostrCommentsInner({
   const { signerInfo } = useSigner();
 
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [externalSignerFailed, setExternalSignerFailed] = useState(false);
   const [parentEvent, setParentEvent] = useState<NostrEvent | null>(null);
+
+  const handleLoginRequired = async () => {
+    if (externalSigner && !externalSignerFailed) {
+      // Initialize external signer on demand (calls getPublicKey)
+      const success = await setExternalSigner(externalSigner);
+      if (!success) {
+        // External signer failed, fall back to login modal
+        setExternalSignerFailed(true);
+        setShowLoginModal(true);
+      }
+    } else {
+      setShowLoginModal(true);
+    }
+  };
 
   const {
     comments,
@@ -76,7 +92,7 @@ function NostrCommentsInner({
         parentEvent={parentEvent}
         onClearParent={() => setParentEvent(null)}
         onPublished={handlePublished}
-        onLoginRequired={() => setShowLoginModal(true)}
+        onLoginRequired={handleLoginRequired}
         onError={handleError}
         className={classNames.editor}
       />
@@ -89,19 +105,21 @@ function NostrCommentsInner({
         error={error}
         relays={relays}
         onReply={handleReply}
-        onLoginRequired={() => setShowLoginModal(true)}
+        onLoginRequired={handleLoginRequired}
         onLoadMore={loadMore}
         onRetry={reload}
         currentPubkey={signerInfo?.pubkey}
         className={classNames.list}
       />
 
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        enabledSigners={enabledSigners as SignerType[]}
-        className={classNames.loginModal}
-      />
+      {(!externalSigner || externalSignerFailed) && (
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          enabledSigners={enabledSigners as SignerType[]}
+          className={classNames.loginModal}
+        />
+      )}
     </div>
   );
 }

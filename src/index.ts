@@ -14,7 +14,7 @@ export { Nip07Signer, TempSigner, BunkerSigner } from "./signers";
 export type { Signer, SignerType, SignerInfo } from "./signers";
 
 // Hooks
-export { useSigner, useComments, useProfile, isLoggedIn } from "./hooks";
+export { useSigner, useComments, useProfile, isLoggedIn, setExternalSigner } from "./hooks";
 export type { UseCommentsOptions } from "./hooks";
 
 // Components
